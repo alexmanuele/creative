@@ -65,23 +65,30 @@ def recursive_shapes( trtl, origin, heading=90, radius=100, nsides=6, circle=Tru
             
 if __name__ == "__main__":
     try:
-        assert len(sys.argv) == 3
+        assert len(sys.argv) == 5
     except:
-        print("Usage: python turtle.py radius nsides")
+        print("Usage: python turtle.py radius nsides circle draw")
         sys.exit(1)
         
     origin = (0,0)
     heading = 90
     radius = float(sys.argv[1])
     nsides = int(sys.argv[2])
+    circle = bool(int(sys.argv[3]))
+    draw = bool(int(sys.argv[4]))
+    
     assert nsides > 2
+    
     t = turtle.Turtle()
-    t.speed('fastest')
+    if draw:
+        t.speed(10)
+    else:
+        t.speed('fastest')
 
-    cmap = {i:c for i, c in enumerate(sns.color_palette('nipy_spectral', nsides-2))}
+    cmap = {i:c for i, c in enumerate(sns.color_palette('gist_ncar', nsides-2))}
 
     turtle.screensize(canvwidth=1000, canvheight=1000, bg='black')
-    recursive_shapes(t, origin, heading, radius, nsides, circle=False)
+    recursive_shapes(t, origin, heading, radius, nsides, circle=circle)
     turtle.done()
 
     
